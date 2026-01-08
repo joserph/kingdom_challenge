@@ -15,6 +15,9 @@ return new class extends Migration
             $table->id();
 
             $table->string('name');
+            $table->string('color')->default('#3b82f6');
+            $table->string('light_color')->default('#dbeafe');
+            $table->string('dark_color')->default('#1e40af');
             $table->string('icon')->default('heroicon-o-user-group');
             $table->text('description')->nullable();
             $table->boolean('active')->default(true);

@@ -5,6 +5,7 @@ namespace App\Filament\Resources\WeekCompetitions;
 use App\Filament\Resources\WeekCompetitions\Pages\CreateWeekCompetition;
 use App\Filament\Resources\WeekCompetitions\Pages\EditWeekCompetition;
 use App\Filament\Resources\WeekCompetitions\Pages\ListWeekCompetitions;
+use App\Filament\Resources\WeekCompetitions\Pages\RegisterPoints;
 use App\Filament\Resources\WeekCompetitions\Schemas\WeekCompetitionForm;
 use App\Filament\Resources\WeekCompetitions\Tables\WeekCompetitionsTable;
 use App\Models\WeekCompetition;
@@ -45,6 +46,7 @@ class WeekCompetitionResource extends Resource
             'index' => ListWeekCompetitions::route('/'),
             'create' => CreateWeekCompetition::route('/create'),
             'edit' => EditWeekCompetition::route('/{record}/edit'),
+            // 'points' => RegisterPoints::route('/{record}/points'),
         ];
     }
 }

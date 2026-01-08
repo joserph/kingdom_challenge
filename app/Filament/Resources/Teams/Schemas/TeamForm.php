@@ -20,14 +20,15 @@ class TeamForm
                 Section::make('Información del Equipo')
                     ->schema([
                         TextInput::make('name')
-                            ->required(),
-                        TextInput::make('icon')
-                            ->required()
-                            ->default('heroicon-o-user-group'),
+                        ->required()
+                        ->maxLength(255)
+                        ->placeholder('Ej: Águilas, Leones, Tigres...'),
                         Textarea::make('description')
-                            ->columnSpanFull(),
+                            ->rows(3)
+                            ->placeholder('Descripción del equipo...'),
                         Toggle::make('active')
-                            ->required(),
+                            ->default(true)
+                            ->label('Participa en competencia'),
                     ])->columns(1),
                 Section::make('Personalización')
                     ->description('Colores e icono para identificar el equipo')

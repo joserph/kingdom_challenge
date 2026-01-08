@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Team extends Model
 {
     protected $fillable = [
-        'name', 'icon', 'description', 'active'
+        'name', 'icon', 'description', 'active', 'color', 'light_color', 'dark_color'
     ];
 
     // RELACIÓN: Un equipo tiene muchos jóvenes
@@ -20,7 +20,7 @@ class Team extends Model
     // RELACIÓN: Un equipo gana muchas semanas de juegos
     public function weeksWonGames()
     {
-        return $this->hasMany(WeekCompetiion::class, 'winning_team_games');
+        return $this->hasMany(WeekCompetition::class, 'winning_team_games');
     }
 
     // ATRIBUTO CALCULADO: Puntos totales del equipo
