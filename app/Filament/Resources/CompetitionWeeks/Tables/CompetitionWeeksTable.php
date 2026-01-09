@@ -2,7 +2,10 @@
 
 namespace App\Filament\Resources\CompetitionWeeks\Tables;
 
+use App\Filament\Resources\CompetitionWeeks\CompetitionWeekResource;
+use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
@@ -43,7 +46,15 @@ class CompetitionWeeksTable
                 //
             ])
             ->recordActions([
+                Action::make('register_points')
+                    ->label('Register Points')
+                    ->icon('heroicon-o-pencil')
+                    ->color('primary')
+                    ->url(fn ($record) => CompetitionWeekResource::getUrl('points', ['record' => $record]))
+                    ->visible(fn ($record) => $record->status != 'completed'),
+                
                 EditAction::make(),
+                DeleteAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

@@ -17,14 +17,15 @@ class RegisterPoints extends Page implements HasForms
     protected static string $resource = CompetitionWeekResource::class;
 
     protected string $view = 'filament.resources.competition-weeks.pages.register-points';
-
+    
     // Public variables
     public CompetitionWeek $record;
     public ?array $data = [];
     public $teams = [];
     public $gameWinnerTeamId = null;
     public $gamePointsWinner = 0;
-
+    
+    
     public function mount(): void
     {
         // Load active teams with their youths

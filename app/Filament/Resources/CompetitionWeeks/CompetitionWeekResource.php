@@ -5,6 +5,7 @@ namespace App\Filament\Resources\CompetitionWeeks;
 use App\Filament\Resources\CompetitionWeeks\Pages\CreateCompetitionWeek;
 use App\Filament\Resources\CompetitionWeeks\Pages\EditCompetitionWeek;
 use App\Filament\Resources\CompetitionWeeks\Pages\ListCompetitionWeeks;
+use App\Filament\Resources\CompetitionWeeks\Pages\RegisterPoints;
 use App\Filament\Resources\CompetitionWeeks\Schemas\CompetitionWeekForm;
 use App\Filament\Resources\CompetitionWeeks\Tables\CompetitionWeeksTable;
 use App\Models\CompetitionWeek;
@@ -45,7 +46,7 @@ class CompetitionWeekResource extends Resource
             'index' => ListCompetitionWeeks::route('/'),
             'create' => CreateCompetitionWeek::route('/create'),
             'edit' => EditCompetitionWeek::route('/{record}/edit'),
-            // 'points' => RegisterPoints::route('/{record}/points'),
+            'points' => RegisterPoints::route('/{record}/points'),
         ];
     }
 }
