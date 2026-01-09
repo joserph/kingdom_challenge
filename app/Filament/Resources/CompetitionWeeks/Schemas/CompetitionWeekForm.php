@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\WeekCompetitions\Schemas;
+namespace App\Filament\Resources\CompetitionWeeks\Schemas;
 
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
@@ -8,7 +8,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Schemas\Schema;
 
-class WeekCompetitionForm
+class CompetitionWeekForm
 {
     public static function configure(Schema $schema): Schema
     {
@@ -21,13 +21,13 @@ class WeekCompetitionForm
                 TextInput::make('week_number')
                     ->required()
                     ->numeric(),
-                Select::make('state')
+                Select::make('status')
                     ->options(['pending' => 'Pending', 'in_progress' => 'In progress', 'completed' => 'Completed'])
                     ->default('pending')
                     ->required(),
-                TextInput::make('winning_team_games')
+                TextInput::make('game_winner_team_id')
                     ->numeric(),
-                TextInput::make('points_games_winning_team')
+                TextInput::make('game_points_winner')
                     ->required()
                     ->numeric()
                     ->default(0),

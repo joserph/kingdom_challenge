@@ -8,34 +8,35 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Team extends Model
 {
     protected $fillable = [
-        'name', 'icon', 'description', 'active', 'color', 'light_color', 'dark_color'
+        'name', 'color', 'light_color', 'dark_color',
+        'icon', 'description', 'active'
     ];
 
-    // RELACIÓN: Un equipo tiene muchos jóvenes
-    public function youngs(): HasMany
+    // RELATIONSHIP: A team has many youths
+    public function youths(): HasMany
     {
-        return $this->hasMany(Young::class);
+        return $this->hasMany(Youth::class);
     }
 
-    // RELACIÓN: Un equipo gana muchas semanas de juegos
-    public function weeksWonGames()
+    // RELATIONSHIP: A team wins many game weeks
+    public function gameWins()
     {
-        return $this->hasMany(WeekCompetition::class, 'winning_team_games');
+        return $this->hasMany(CompetitionWeek::class, 'game_winner_team_id');
     }
 
-    // ATRIBUTO CALCULADO: Puntos totales del equipo
+    // CALCULATED ATTRIBUTE: Team total points
     public function getTotalPointsAttribute()
     {
-        return $this->youngs()
+        return $this->youths()
             ->where('active', true)
             ->withSum('scores', 'total_points')
             ->get()
-            ->sum('total_scores_points');
+            ->sum('scores_sum_total_points');
     }
 
-    // ATRIBUTO CALCULADO: Jóvenes activos
-    public function getYoungActiveAttribute()
+    // CALCULATED ATTRIBUTE: Active youths count
+    public function getActiveYouthsAttribute()
     {
-        return $this->youngs()->where('active', true)->count();
+        return $this->youths()->where('active', true)->count();
     }
 }

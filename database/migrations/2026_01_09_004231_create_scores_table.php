@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('scores', function (Blueprint $table) {
             $table->id();
-
-            $table->foreignId('young_id')->constrained()->onDelete('cascade');
-            $table->foreignId('week_competition_id')->constrained()->onDelete('cascade');
-            $table->boolean('assistance')->default(false);
+            
+            $table->foreignId('youth_id')->constrained()->onDelete('cascade');
+            $table->foreignId('competition_week_id')->constrained()->onDelete('cascade');
+            $table->boolean('attendance')->default(false);
             $table->boolean('punctuality')->default(false);
             $table->boolean('bible')->default(false);
             $table->boolean('guest')->default(false);
@@ -24,8 +24,8 @@ return new class extends Migration
             $table->text('observations')->nullable();
             $table->timestamps();
 
-            // Un joven solo puede tener una puntuación por semana
-            $table->unique(['young_id', 'week_competition_id']);
+            // A youth can only have one score per week
+            $table->unique(['youth_id', 'competition_week_id']);
         });
     }
 

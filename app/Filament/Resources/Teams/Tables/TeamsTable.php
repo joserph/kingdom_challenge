@@ -18,36 +18,36 @@ class TeamsTable
     {
         return $table
             ->columns([
-                    // Columna con color
+                // Color column
                 ColorColumn::make('color')
                     ->label('')
                     ->width(20),
                 
-                // Nombre con badge de color
+                // Name with color badge
                 TextColumn::make('name')
                     ->searchable()
                     ->sortable()
-                    ->description(fn ($record) => $record->descripcion)
+                    ->description(fn ($record) => $record->description)
                     ->weight('bold'),
                 
-                // Cantidad de jóvenes
-                TextColumn::make('youngs_count')
-                    ->counts('youngs')
-                    ->label('Jóvenes')
+                // Youth count
+                TextColumn::make('youths_count')
+                    ->counts('youths')
+                    ->label('Youths')
                     ->sortable()
                     ->color('primary'),
                 
-                // Puntos totales
+                // Total points
                 TextColumn::make('total_points')
-                    ->label('Puntos')
+                    ->label('Points')
                     ->numeric()
                     ->sortable()
                     ->color('success'),
                 
-                // Estado activo
+                // Active status
                 IconColumn::make('active')
                     ->boolean()
-                    ->label('Activo')
+                    ->label('Active')
                     ->trueColor('success')
                     ->falseColor('danger'),
             ])
@@ -57,12 +57,12 @@ class TeamsTable
             ->recordActions([
                 EditAction::make(),
                 DeleteAction::make()
-                ->before(function ($record) {
-                    // Validar que no tenga jóvenes asignados
-                    if ($record->youngs()->count() > 0) {
-                        throw new \Exception('No se puede eliminar un equipo con jóvenes asignados.');
-                    }
-                }),
+                    ->before(function ($record) {
+                        // Validate no youths assigned
+                        if ($record->youths()->count() > 0) {
+                            throw new \Exception('Cannot delete a team with assigned youths.');
+                        }
+                    }),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

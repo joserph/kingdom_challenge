@@ -16,51 +16,73 @@ class TeamForm
     {
         return $schema
             ->components([
-                // SECCIÓN 1: Información básica
-                Section::make('Información del Equipo')
+                // TextInput::make('name')
+                //     ->required(),
+                // TextInput::make('color')
+                //     ->required()
+                //     ->default('#3b82f6'),
+                // TextInput::make('light_color')
+                //     ->required()
+                //     ->default('#dbeafe'),
+                // TextInput::make('dark_color')
+                //     ->required()
+                //     ->default('#1e40af'),
+                // TextInput::make('icon')
+                //     ->required()
+                //     ->default('heroicon-o-user-group'),
+                // Textarea::make('description')
+                //     ->columnSpanFull(),
+                // Toggle::make('active')
+                //     ->required(),
+                // SECTION 1: Basic information
+                Section::make('Team Information')
                     ->schema([
                         TextInput::make('name')
-                        ->required()
-                        ->maxLength(255)
-                        ->placeholder('Ej: Águilas, Leones, Tigres...'),
+                            ->required()
+                            ->maxLength(255)
+                            ->placeholder('Ex: Eagles, Lions, Tigers...'),
+                        
                         Textarea::make('description')
                             ->rows(3)
-                            ->placeholder('Descripción del equipo...'),
+                            ->placeholder('Team description...'),
+                        
                         Toggle::make('active')
                             ->default(true)
-                            ->label('Participa en competencia'),
+                            ->label('Participates in competition'),
                     ])->columns(1),
-                Section::make('Personalización')
-                    ->description('Colores e icono para identificar el equipo')
+                
+                // SECTION 2: Visual customization
+                Section::make('Customization')
+                    ->description('Colors and icon to identify the team')
                     ->schema([
                         ColorPicker::make('color')
-                        ->label('Color Principal')
-                        ->default('#3b82f6')
-                        ->helperText('Color para botones y elementos destacados'),
-                    
-                    ColorPicker::make('color_claro')
-                        ->label('Color de Fondo')
-                        ->default('#dbeafe')
-                        ->helperText('Color para fondos de tarjetas'),
-                    
-                    ColorPicker::make('color_oscuro')
-                        ->label('Color de Texto')
-                        ->default('#1e40af')
-                        ->helperText('Color para textos sobre fondo claro'),
-                    
-                    Select::make('icono')
-                        ->options([
-                            'heroicon-o-flag' => '🚩 Bandera',
-                            'heroicon-o-fire' => '🔥 Fuego',
-                            'heroicon-o-shield-check' => '🛡️ Escudo',
-                            'heroicon-o-trophy' => '🏆 Trofeo',
-                            'heroicon-o-bolt' => '⚡ Rayo',
-                            'heroicon-o-star' => '⭐ Estrella',
-                            'heroicon-o-heart' => '❤️ Corazón',
-                            'heroicon-o-users' => '👥 Grupo',
-                        ])
-                        ->default('heroicon-o-flag')
-                        ->helperText('Ícono que representa al equipo'),
+                            ->label('Primary Color')
+                            ->default('#3b82f6')
+                            ->helperText('Color for buttons and highlighted elements'),
+                        
+                        ColorPicker::make('light_color')
+                            ->label('Background Color')
+                            ->default('#dbeafe')
+                            ->helperText('Color for card backgrounds'),
+                        
+                        ColorPicker::make('dark_color')
+                            ->label('Text Color')
+                            ->default('#1e40af')
+                            ->helperText('Color for text on light background'),
+                        
+                        Select::make('icon')
+                            ->options([
+                                'heroicon-o-flag' => '🚩 Flag',
+                                'heroicon-o-fire' => '🔥 Fire',
+                                'heroicon-o-shield-check' => '🛡️ Shield',
+                                'heroicon-o-trophy' => '🏆 Trophy',
+                                'heroicon-o-bolt' => '⚡ Lightning',
+                                'heroicon-o-star' => '⭐ Star',
+                                'heroicon-o-heart' => '❤️ Heart',
+                                'heroicon-o-users' => '👥 Group',
+                            ])
+                            ->default('heroicon-o-flag')
+                            ->helperText('Icon representing the team'),
                     ])->columns(2),
             ]);
     }

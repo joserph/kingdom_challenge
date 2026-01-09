@@ -11,15 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('teams', function (Blueprint $table) {
+        Schema::create('youths', function (Blueprint $table) {
             $table->id();
 
             $table->string('name');
-            $table->string('color')->default('#3b82f6');
-            $table->string('light_color')->default('#dbeafe');
-            $table->string('dark_color')->default('#1e40af');
-            $table->string('icon')->default('heroicon-o-user-group');
-            $table->text('description')->nullable();
+            // REMOVE: $table->integer('age');
+            // ADD:
+            $table->date('birthdate'); // Changed from age to birthdate
+            $table->string('phone')->nullable();
+            $table->string('email')->nullable();
+            $table->foreignId('team_id')->constrained()->onDelete('restrict');
             $table->boolean('active')->default(true);
 
             $table->timestamps();
@@ -31,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('teams');
+        Schema::dropIfExists('youths');
     }
 };

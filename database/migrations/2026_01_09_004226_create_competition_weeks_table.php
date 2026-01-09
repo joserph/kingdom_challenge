@@ -11,17 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('week_competitions', function (Blueprint $table) {
+        Schema::create('competition_weeks', function (Blueprint $table) {
             $table->id();
 
             $table->string('name');
             $table->date('date');
             $table->integer('week_number');
-            $table->enum('state', ['pending', 'in_progress', 'completed'])->default('pending');
-            $table->foreignId('winning_team_games')->nullable()->constrained('teams');
-            $table->integer('points_games_winning_team')->default(0);
+            $table->enum('status', ['pending', 'in_progress', 'completed'])->default('pending');
+            $table->foreignId('game_winner_team_id')->nullable()->constrained('teams');
+            $table->integer('game_points_winner')->default(0);
             $table->text('observations')->nullable();
-
+            
             $table->timestamps();
         });
     }
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('week_competitions');
+        Schema::dropIfExists('competition_weeks');
     }
 };

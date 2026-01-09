@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Filament\Resources\Youngs\Pages;
+namespace App\Filament\Resources\Youths\Pages;
 
-use App\Filament\Resources\Youngs\YoungResource;
+use App\Filament\Resources\Youths\YouthResource;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 
-class ListYoungs extends ListRecords
+class ListYouths extends ListRecords
 {
-    protected static string $resource = YoungResource::class;
+    protected static string $resource = YouthResource::class;
 
     protected function getHeaderActions(): array
     {

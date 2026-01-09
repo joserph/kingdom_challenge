@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Filament\Resources\Youngs\Pages;
+namespace App\Filament\Resources\Youths\Pages;
 
-use App\Filament\Resources\Youngs\YoungResource;
+use App\Filament\Resources\Youths\YouthResource;
 use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
 
-class EditYoung extends EditRecord
+class EditYouth extends EditRecord
 {
-    protected static string $resource = YoungResource::class;
+    protected static string $resource = YouthResource::class;
 
     protected function getHeaderActions(): array
     {

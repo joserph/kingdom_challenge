@@ -8,32 +8,32 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Score extends Model
 {
     protected $fillable = [
-        'young_id', 'week_competiion_id',
-        'assistance', 'punctuality', 'bible', 'guest',
+        'youth_id', 'competition_week_id',
+        'attendance', 'punctuality', 'bible', 'guest',
         'total_points', 'observations'
     ];
 
-    // RELACIÓN: Una puntuación pertenece a un joven
-    public function young(): BelongsTo
+    // RELATIONSHIP: A score belongs to a youth
+    public function youth(): BelongsTo
     {
-        return $this->belongsTo(Young::class);
+        return $this->belongsTo(Youth::class);
     }
 
-    // RELACIÓN: Una puntuación pertenece a una semana
+    // RELATIONSHIP: A score belongs to a week
     public function week(): BelongsTo
     {
-        return $this->belongsTo(WeekCompetition::class, 'week_competiion_id');
+        return $this->belongsTo(CompetitionWeek::class, 'competition_week_id');
     }
 
-    // EVENTO: Calcular puntos antes de guardar
+    // EVENT: Calculate points before saving
     protected static function booted()
     {
         static::saving(function ($score) {
             $points = 0;
-            $points += $score->assistance ? 10 : 0;    // Asistencia: 10 pts
-            $points += $score->punctuality ? 10 : 0;   // Puntualidad: 10 pts
-            $points += $score->bible ? 5 : 0;         // Biblia: 5 pts
-            $points += $score->guest ? 20 : 0;      // Invitado: 20 pts
+            $points += $score->attendance ? 10 : 0;    // Attendance: 10 pts
+            $points += $score->punctuality ? 10 : 0;   // Punctuality: 10 pts
+            $points += $score->bible ? 5 : 0;          // Bible: 5 pts
+            $points += $score->guest ? 20 : 0;         // Guest: 20 pts
             
             $score->total_points = $points;
         });
