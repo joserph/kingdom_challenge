@@ -19,60 +19,144 @@
                 </div>
             </div>
         </div>
+        <hr>
+        <div class="fi-card overflow-hidden">
+            <div class="fi-ta-container overflow-x-auto">
+                <table class="fi-ta-table w-full text-sm">
+                    <thead class="fi-ta-header">
+                        <tr class="fi-ta-header-row">
+                            <th class="fi-ta-header-cell text-left">
+                                Criterio
+                            </th>
+                            <th class="fi-ta-header-cell text-center">
+                                Puntos
+                            </th>
+                            <th class="fi-ta-header-cell text-center">
+                                Estado
+                            </th>
+                        </tr>
+                    </thead>
 
-        <!-- HEADER -->
-        {{-- <div class="mb-6">
-            <h1 class="text-2xl font-bold text-gray-900 dark:text-white">
-                Registrar Puntos - {{ $record->name }}
-            </h1>
-            <p class="text-gray-600 dark:text-gray-400">
-                Semana {{ $record->week_number }} • {{ $record->date }}
-            </p>
-        </div> --}}
+                    <tbody class="fi-ta-body">
+                        @foreach ([
+                            ['label' => 'Asistencia', 'points' => 10, 'active' => true],
+                            ['label' => 'Puntualidad', 'points' => 10, 'active' => true],
+                            ['label' => 'Biblia', 'points' => 5, 'active' => true],
+                            ['label' => 'Invitados', 'points' => 15, 'active' => true],
+                        ] as $item)
+                            <tr class="fi-ta-row">
+                                <td class="fi-ta-cell">
+                                    {{ $item['label'] }}
+                                </td>
 
-        <!-- GAME WINNER SELECTOR -->
-        {{-- <div class="mb-8 p-4 bg-white dark:bg-gray-800 rounded-lg shadow">
-            <h2 class="text-xl font-bold mb-4">🏆 Ganador de los Juegos (+50 pts)</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                @foreach($teams as $team)
-                <div class="cursor-pointer" wire:click="$set('gameWinnerTeamId', {{ $team->id }})">
-                    <div class="p-4 border-2 rounded-lg text-center transition-all
-                                {{ $gameWinnerTeamId == $team->id
-                                    ? 'border-4'
-                                    : 'border-gray-200 dark:border-gray-700 hover:border-gray-300' }}"
-                            @if($gameWinnerTeamId == $team->id)
-                                style="border-color: {{ $team->color }}; background-color: {{ $team->light_color }};"
-                            @endif>
-                        <div class="text-lg font-bold" style="color: {{ $team->color }}">
-                            {{ $team->name }}
-                        </div>
-                        <div class="text-sm">+50 pts al equipo</div>
-                    </div>
-                </div>
-                @endforeach
-                
-                <!-- Opción sin ganador -->
-                <div class="cursor-pointer" wire:click="$set('gameWinnerTeamId', null)">
-                    <div class="p-4 border-2 rounded-lg text-center transition-all
-                        {{ !$gameWinnerTeamId 
-                            ? 'border-gray-500 bg-gray-100 dark:bg-gray-800'
-                            : 'border-gray-200 dark:border-gray-700 hover:border-gray-300' }}">
-                        <div class="text-lg font-bold">Sin ganador</div>
-                        <div class="text-sm">Empate o no aplica</div>
-                    </div>
-                </div>
+                                <td class="fi-ta-cell text-center font-medium">
+                                    {{ $item['points'] }}
+                                </td>
+
+                                <td class="fi-ta-cell text-center">
+                                    @if ($item['active'])
+                                        <span class="fi-badge fi-color-success">
+                                            Activo
+                                        </span>
+                                    @else
+                                        <span class="fi-badge fi-color-danger">
+                                            Inactivo
+                                        </span>
+                                    @endif
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
-            
-            @if($gameWinnerTeamId)
-                @php $winningTeam = $teams->firstWhere('id', $gameWinnerTeamId); @endphp
-                <div class="mt-4 p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg">
-                    <p class="text-sm text-yellow-800 dark:text-yellow-200">
-                        ⚡ Equipo <strong style="color: {{ $winningTeam->color ?? '#000' }}">{{ $winningTeam->name ?? '' }}</strong> 
-                        recibirá <strong>50 puntos adicionales</strong> por ganar los juegos.
-                    </p>
-                </div>
-            @endif
-        </div> --}}
+        </div>
+        <hr>
+        @foreach ($teams as $team)
+        <div class="fi-card overflow-hidden">
+            <div class="fi-ta-container overflow-x-auto" style="background-color: {{ $team->light_color }}">
+                <table class="fi-ta-table w-full text-sm">
+                    <thead class="fi-ta-header">
+                        <tr>
+                            <th class="fi-ta-header-cell text-left">
+                                <h2 class="text-xl font-bold flex items-center gap-2" style="color: {{ $team->color }}">
+                                    {{ $team->name }}
+
+                                    @if ($gameWinnerTeamId === $team->id)
+                                        <span class="inline-flex items-center rounded-full px-3 py-1 text-sm font-medium
+                                                bg-warning-100 text-warning-800
+                                                dark:bg-warning-900 dark:text-warning-200">
+                                            🏆 GANADOR +50 pts
+                                        </span>
+                                    @endif
+                                </h2>
+                            </th>
+                            <th class="fi-ta-header-cell text-center">
+                                {{ $this->getTeamPoints($team->id) }} Puntos
+                            </th>
+                        </tr>
+                        
+                        <tr class="fi-ta-header-row">
+                            <th class="fi-ta-header-cell text-left">
+                                Nombre
+                            </th>
+                            <th class="fi-ta-header-cell text-center">
+                                Puntos
+                            </th>
+                            <th class="fi-ta-header-cell text-center">
+                                Asistencia
+                            </th>
+                            <th class="fi-ta-header-cell text-center">
+                                Puntualidad
+                            </th>
+                            <th class="fi-ta-header-cell text-center">
+                                Biblia
+                            </th>
+                            <th class="fi-ta-header-cell text-center">
+                                Invitado
+                            </th>
+                        </tr>
+
+                        
+                    </thead>
+                    @foreach ($team->youths as $youth)
+                            @php
+                                $key = 'youth_' . $youth->id;
+                                $individualPoints = $this->getPointsPerYouth($youth->id);
+                            @endphp
+                    <tbody class="fi-ta-body">
+                        <tr class="fi-ta-row">
+                            <td class="fi-ta-cell">
+                                {{ $youth->name }}
+                            </td>
+                            <td class="fi-ta-cell">
+                                {{ $individualPoints }}
+                            </td>
+                            @foreach ([
+                                ['key' => 'attendance', 'label' => 'Asistencia', 'points' => 10],
+                                ['key' => 'punctuality', 'label' => 'Puntualidad', 'points' => 10],
+                                ['key' => 'bible', 'label' => 'Biblia', 'points' => 5],
+                                ['key' => 'guest', 'label' => 'Invitado', 'points' => 20],
+                            ] as $item)
+                            <td class="fi-ta-cell">
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input
+                                        type="checkbox"
+                                        wire:model.live="data.{{ $key }}.{{ $item['key'] }}"
+                                        class="sr-only peer"
+                                    >
+                                    <div
+                                        
+                                    ></div>
+                                </label>
+                            </td>
+                            @endforeach
+                        </tr>
+                    </tbody>
+                    @endforeach
+                </table>
+            </div>
+        </div>
+        @endforeach
         <x-filament::section>
             <x-slot name="heading">
                 🏆 Ganador de los Juegos (+50 pts)
@@ -167,97 +251,6 @@
         </x-filament::section>
 
 
-        <!-- REGISTRATION BY TEAM -->
-        {{-- @foreach($teams as $team)
-        <div class="mb-8 p-4 rounded-lg shadow" style="background-color: {{ $team->light_color }}20">
-            <div class="flex justify-between items-center mb-4">
-                <h2 class="text-xl font-bold" style="color: {{ $team->color }}">
-                    {{ $team->name }}
-                    @if($gameWinnerTeamId == $team->id)
-                    <span class="ml-2 inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200">
-                        🏆 GANADOR +50 pts
-                    </span>
-                    @endif
-                </h2>
-                <div class="text-lg font-bold" style="color: {{ $team->color }}">
-                    {{ $this->getTeamPoints($team->id) }} pts
-                </div>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                @foreach($team->youths as $youth)
-                @php 
-                    $key = 'youth_' . $youth->id;
-                    $individualPoints = $this->getPointsPerYouth($youth->id);
-                @endphp
-                
-                <div class="bg-white dark:bg-gray-800 p-4 rounded shadow">
-                    <div class="flex justify-between items-start mb-3">
-                        <div>
-                            <h3 class="font-bold text-gray-900 dark:text-white">
-                                {{ $youth->name }}
-                            </h3>
-                            <p class="text-sm text-gray-500 dark:text-gray-400">
-                                {{ $youth->age }} años
-                            </p>
-                        </div>
-                        <div class="text-sm font-bold text-gray-700 dark:text-gray-300">
-                            {{ $individualPoints }} pts
-                        </div>
-                    </div>
-
-                    <!-- POINTS TOGGLES -->
-                    <div class="space-y-3">
-                        @foreach([
-                            ['key' => 'attendance', 'label' => 'Asistencia', 'points' => 10],
-                            ['key' => 'punctuality', 'label' => 'Puntualidad', 'points' => 10],
-                            ['key' => 'bible', 'label' => 'Biblia', 'points' => 5],
-                            ['key' => 'guest', 'label' => 'Invitado', 'points' => 20],
-                        ] as $item)
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <label class="text-sm font-medium text-gray-700 dark:text-gray-300">
-                                    {{ $item['label'] }}
-                                </label>
-                                <div class="text-xs text-gray-500 dark:text-gray-400">
-                                    {{ $item['points'] }} pts
-                                </div>
-                            </div>
-                            
-                            <!-- En Filament v4, los toggles se usan así -->
-                            <div class="relative inline-block w-12 align-middle select-none">
-                                <input 
-                                    type="checkbox"
-                                    wire:model.live="data.{{ $key }}.{{ $item['key'] }}"
-                                    class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer"
-                                    style="border-color: {{ $team->color }};"
-                                />
-                                <label 
-                                    class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"
-                                    style="background-color: {{ $team->light_color }};"
-                                ></label>
-                            </div>
-                        </div>
-                        @endforeach
-                        
-                        <!-- Observations -->
-                        <div class="mt-4">
-                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                                Observaciones
-                            </label>
-                            <input 
-                                type="text"
-                                wire:model="data.{{ $key }}.observations"
-                                placeholder="Observaciones..."
-                                class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
-                            />
-                        </div>
-                    </div>
-                </div>
-                @endforeach
-            </div>
-        </div>
-        @endforeach --}}
         @foreach ($teams as $team)
             <x-filament::section
                 class="mb-8"
@@ -696,6 +689,61 @@
         </x-filament::button>
     </div>
 </div>
+-------------------------------------
+<hr>
+<div class="fi-card overflow-hidden">
+    <div class="fi-ta-container overflow-x-auto">
+        <table class="fi-ta-table w-full text-sm">
+            <thead class="fi-ta-header">
+                <tr class="fi-ta-header-row">
+                    <th class="fi-ta-header-cell text-left">
+                        Criterio
+                    </th>
+                    <th class="fi-ta-header-cell text-center">
+                        Puntos
+                    </th>
+                    <th class="fi-ta-header-cell text-center">
+                        Estado
+                    </th>
+                </tr>
+            </thead>
+
+            <tbody class="fi-ta-body">
+                @foreach ([
+                    ['label' => 'Asistencia', 'points' => 10, 'active' => true],
+                    ['label' => 'Puntualidad', 'points' => 10, 'active' => true],
+                    ['label' => 'Biblia', 'points' => 5, 'active' => true],
+                    ['label' => 'Invitados', 'points' => 15, 'active' => true],
+                ] as $item)
+                    <tr class="fi-ta-row">
+                        <td class="fi-ta-cell">
+                            {{ $item['label'] }}
+                        </td>
+
+                        <td class="fi-ta-cell text-center font-medium">
+                            {{ $item['points'] }}
+                        </td>
+
+                        <td class="fi-ta-cell text-center">
+                            @if ($item['active'])
+                                <span class="fi-badge fi-color-success">
+                                    Activo
+                                </span>
+                            @else
+                                <span class="fi-badge fi-color-danger">
+                                    Inactivo
+                                </span>
+                            @endif
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
 
     </form>
 </x-filament-panels::page>
