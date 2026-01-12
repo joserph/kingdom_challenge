@@ -6,8 +6,10 @@ use App\Filament\Resources\CompetitionWeeks\CompetitionWeekResource;
 use App\Models\CompetitionWeek;
 use App\Models\Score;
 use App\Models\Team;
+use App\Models\Youth;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
+use Filament\Notifications\Notification;
 use Filament\Resources\Pages\Page;
 use Illuminate\Support\Facades\DB;
 
@@ -24,17 +26,29 @@ class RegisterPoints extends Page implements HasForms
     public $teams = [];
     public $gameWinnerTeamId = null;
     public $gamePointsWinner = 0;
+
+    // public $youths = Youth::where('active', true)->all();
     
     
     public function mount(): void
     {
+        // foreach ($this->youths as $youth) {
+        //     $key = 'youth_' . $youth->id;
+        //     $this->data[$key] = [
+        //         'attendance' => $youth->attendance ?? 0,
+        //         'punctuality' => $youth->punctuality ?? 0,
+        //         'bible' => $youth->bible ?? 0,
+        //         'guest' => $youth->guest ?? 0,
+        //     ];
+        // }
+
         // Load active teams with their youths
         $this->teams = Team::where('active', true)
             ->with(['youths' => function ($query) {
                 $query->where('active', true)->orderBy('name');
             }])
             ->get();
-        
+        // dd($this->teams);
         // Load existing scores
         $scores = Score::where('competition_week_id', $this->record->id)->get();
         
@@ -93,10 +107,19 @@ class RegisterPoints extends Page implements HasForms
                 ]);
             });
             
-            $this->notify('success', '✅ Points saved successfully');
+            // $this->notify('success', '✅ Points saved successfully');
+            Notification::make()
+                ->title('Points saved successfully')
+                ->success()
+                ->send();
             return redirect()->to(CompetitionWeekResource::getUrl('index'));
         } catch (\Exception $e) {
-            $this->notify('error', '❌ Error: ' . $e->getMessage());
+            // $this->notify('error', '❌ Error: ' . $e->getMessage());
+            Notification::make()
+                ->title('❌ Error')
+                ->body($e->getMessage())
+                ->danger()
+                ->send();
         }
     }
 
@@ -130,7 +153,7 @@ class RegisterPoints extends Page implements HasForms
         foreach ($team->youths as $youth) {
             $total += $this->getPointsPerYouth($youth->id);
         }
-        
+        // dd($total);
         // Add game points
         if ($this->gameWinnerTeamId == $teamId) {
             $total += $this->gamePointsWinner;

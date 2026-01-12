@@ -11,152 +11,169 @@
                     <div class="fi-wi-stats-overview-stat-value">
                         Semana {{ $record->week_number }} • {{ $record->date }}
                     </div>
-                    {{-- <div class="fi-wi-stats-overview-stat-description">
-                        <span>
-                            Active in competition
-                        </span>
-                    </div> --}}
                 </div>
             </div>
         </div>
-        <hr>
-        <div class="fi-card overflow-hidden">
-            <div class="fi-ta-container overflow-x-auto">
-                <table class="fi-ta-table w-full text-sm">
-                    <thead class="fi-ta-header">
-                        <tr class="fi-ta-header-row">
-                            <th class="fi-ta-header-cell text-left">
-                                Criterio
-                            </th>
-                            <th class="fi-ta-header-cell text-center">
-                                Puntos
-                            </th>
-                            <th class="fi-ta-header-cell text-center">
-                                Estado
-                            </th>
-                        </tr>
-                    </thead>
-
-                    <tbody class="fi-ta-body">
-                        @foreach ([
-                            ['label' => 'Asistencia', 'points' => 10, 'active' => true],
-                            ['label' => 'Puntualidad', 'points' => 10, 'active' => true],
-                            ['label' => 'Biblia', 'points' => 5, 'active' => true],
-                            ['label' => 'Invitados', 'points' => 15, 'active' => true],
-                        ] as $item)
-                            <tr class="fi-ta-row">
-                                <td class="fi-ta-cell">
-                                    {{ $item['label'] }}
-                                </td>
-
-                                <td class="fi-ta-cell text-center font-medium">
-                                    {{ $item['points'] }}
-                                </td>
-
-                                <td class="fi-ta-cell text-center">
-                                    @if ($item['active'])
-                                        <span class="fi-badge fi-color-success">
-                                            Activo
-                                        </span>
-                                    @else
-                                        <span class="fi-badge fi-color-danger">
-                                            Inactivo
-                                        </span>
-                                    @endif
-                                </td>
+        <x-filament::section class="mt-8">
+            <div class="fi-card overflow-hidden">
+                <div class="fi-ta-container overflow-x-auto">
+                    <table class="fi-ta-table w-full text-sm">
+                        <thead class="fi-ta-header">
+                            <tr class="fi-ta-header-row">
+                                <th class="fi-ta-header-cell text-left">
+                                    Criterio
+                                </th>
+                                <th class="fi-ta-header-cell text-center">
+                                    Puntos
+                                </th>
+                                <th class="fi-ta-header-cell text-center">
+                                    Estado
+                                </th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody class="fi-ta-body">
+                            @foreach ([
+                                ['label' => 'Asistencia', 'points' => 10, 'active' => true],
+                                ['label' => 'Puntualidad', 'points' => 10, 'active' => true],
+                                ['label' => 'Biblia', 'points' => 5, 'active' => true],
+                                ['label' => 'Invitados', 'points' => 15, 'active' => true],
+                            ] as $item)
+                                <tr class="fi-ta-row">
+                                    <td class="fi-ta-cell">
+                                        {{ $item['label'] }}
+                                    </td>
+                                    <td class="fi-ta-cell text-center font-medium">
+                                        {{ $item['points'] }}
+                                    </td>
+                                    <td class="fi-ta-cell text-center">
+                                        @if ($item['active'])
+                                            <span class="fi-badge fi-color-success">Activo</span>
+                                        @else
+                                            <span class="fi-badge fi-color-danger">Inactivo</span>
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
-        <hr>
+        </x-filament::section>  
+        <x-filament::section>
         @foreach ($teams as $team)
-        <div class="fi-card overflow-hidden">
-            <div class="fi-ta-container overflow-x-auto" style="background-color: {{ $team->light_color }}">
-                <table class="fi-ta-table w-full text-sm">
-                    <thead class="fi-ta-header">
-                        <tr>
-                            <th class="fi-ta-header-cell text-left">
-                                <h2 class="text-xl font-bold flex items-center gap-2" style="color: {{ $team->color }}">
-                                    {{ $team->name }}
+            <div class="fi-card overflow-hidden">
+                <div class="fi-ta-container overflow-x-auto" style="background-color: {{ $team->light_color }}">
+                    <table class="fi-ta-table w-full text-sm">
+                        <thead class="fi-ta-header">
+                            <tr>
+                                <th class="fi-ta-header-cell text-left">
+                                    <h2 class="text-xl font-bold flex items-center gap-2" style="color: {{ $team->color }}">
+                                        {{ $team->name }}
 
-                                    @if ($gameWinnerTeamId === $team->id)
-                                        <span class="inline-flex items-center rounded-full px-3 py-1 text-sm font-medium
-                                                bg-warning-100 text-warning-800
-                                                dark:bg-warning-900 dark:text-warning-200">
-                                            🏆 GANADOR +50 pts
-                                        </span>
-                                    @endif
-                                </h2>
-                            </th>
-                            <th class="fi-ta-header-cell text-center">
-                                {{ $this->getTeamPoints($team->id) }} Puntos
-                            </th>
-                        </tr>
+                                        @if ($gameWinnerTeamId === $team->id)
+                                            <span class="inline-flex items-center rounded-full px-3 py-1 text-sm font-medium
+                                                    bg-warning-100 text-warning-800
+                                                    dark:bg-warning-900 dark:text-warning-200">
+                                                🏆 GANADOR +50 pts
+                                            </span>
+                                        @endif
+                                    </h2>
+                                </th>
+                                <th class="fi-ta-header-cell text-center">
+                                    {{ $this->getTeamPoints($team->id) }} Puntos
+                                </th>
+                            </tr>
+                            
+                            <tr class="fi-ta-header-row">
+                                <th class="fi-ta-header-cell text-left">
+                                    Nombre
+                                </th>
+                                <th class="fi-ta-header-cell text-center">
+                                    Puntos
+                                </th>
+                                <th class="fi-ta-header-cell text-center">
+                                    Asistencia
+                                </th>
+                                <th class="fi-ta-header-cell text-center">
+                                    Puntualidad
+                                </th>
+                                <th class="fi-ta-header-cell text-center">
+                                    Biblia
+                                </th>
+                                <th class="fi-ta-header-cell text-center">
+                                    Invitado
+                                </th>
+                            </tr>
+                        </thead>
                         
-                        <tr class="fi-ta-header-row">
-                            <th class="fi-ta-header-cell text-left">
-                                Nombre
-                            </th>
-                            <th class="fi-ta-header-cell text-center">
-                                Puntos
-                            </th>
-                            <th class="fi-ta-header-cell text-center">
-                                Asistencia
-                            </th>
-                            <th class="fi-ta-header-cell text-center">
-                                Puntualidad
-                            </th>
-                            <th class="fi-ta-header-cell text-center">
-                                Biblia
-                            </th>
-                            <th class="fi-ta-header-cell text-center">
-                                Invitado
-                            </th>
-                        </tr>
-
-                        
-                    </thead>
-                    @foreach ($team->youths as $youth)
+                        @foreach ($team->youths as $youth)
                             @php
                                 $key = 'youth_' . $youth->id;
                                 $individualPoints = $this->getPointsPerYouth($youth->id);
                             @endphp
-                    <tbody class="fi-ta-body">
-                        <tr class="fi-ta-row">
-                            <td class="fi-ta-cell">
-                                {{ $youth->name }}
-                            </td>
-                            <td class="fi-ta-cell">
-                                {{ $individualPoints }}
-                            </td>
-                            @foreach ([
-                                ['key' => 'attendance', 'label' => 'Asistencia', 'points' => 10],
-                                ['key' => 'punctuality', 'label' => 'Puntualidad', 'points' => 10],
-                                ['key' => 'bible', 'label' => 'Biblia', 'points' => 5],
-                                ['key' => 'guest', 'label' => 'Invitado', 'points' => 20],
-                            ] as $item)
-                            <td class="fi-ta-cell">
-                                <label class="relative inline-flex items-center cursor-pointer">
-                                    <input
-                                        type="checkbox"
-                                        wire:model.live="data.{{ $key }}.{{ $item['key'] }}"
-                                        class="sr-only peer"
-                                    >
-                                    <div
-                                        
-                                    ></div>
-                                </label>
-                            </td>
-                            @endforeach
-                        </tr>
-                    </tbody>
-                    @endforeach
-                </table>
+                            
+                            <tbody class="fi-ta-body">
+                                <tr class="fi-ta-row">
+                                    <td class="fi-ta-cell">
+                                        {{ $youth->name }}
+                                    </td>
+                                    <td class="fi-ta-cell">
+                                        {{ $individualPoints }}
+                                    </td>
+                                    
+                                    @foreach ([
+                                        ['key' => 'attendance', 'label' => 'Asistencia', 'points' => 10],
+                                        ['key' => 'punctuality', 'label' => 'Puntualidad', 'points' => 10],
+                                        ['key' => 'bible', 'label' => 'Biblia', 'points' => 5],
+                                        ['key' => 'guest', 'label' => 'Invitado', 'points' => 20],
+                                    ] as $item)
+                                        <td class="fi-ta-cell">
+                                            @php
+                                                // Verificar si el checkbox debe estar activo
+                                                // Esto depende de cómo estés manejando los datos
+                                                $isChecked = false;
+                                                
+                                                // Opción 1: Si los datos vienen del modelo $youth
+                                                if (isset($youth->{$item['key']}) && $youth->{$item['key']} == 1) {
+                                                    $isChecked = true;
+                                                }
+                                                
+                                                // Opción 2: Si los datos vienen del array $data
+                                                if (isset($data[$key][$item['key']]) && $data[$key][$item['key']] == 1) {
+                                                    $isChecked = true;
+                                                }
+                                                
+                                                // Opción 3: Si estás usando una propiedad computada
+                                                $checkboxValue = $isChecked ? 1 : 0;
+                                            @endphp
+                                            
+                                            <label class="relative inline-flex items-center cursor-pointer">
+                                                <input
+                                                    type="checkbox"
+                                                    wire:model.live="data.{{ $key }}.{{ $item['key'] }}"
+                                                    value="1"
+                                                    @if($isChecked) checked @endif
+                                                    class="sr-only peer"
+                                                >
+                                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 
+                                                        peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full 
+                                                        peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white 
+                                                        after:content-[''] after:absolute after:top-[2px] after:left-[2px] 
+                                                        after:bg-white after:border-gray-300 after:border after:rounded-full 
+                                                        after:h-5 after:w-5 after:transition-all dark:border-gray-600 
+                                                        peer-checked:bg-blue-600">
+                                                </div>
+                                            </label>
+                                        </td>
+                                    @endforeach
+                                </tr>
+                            </tbody>
+                        @endforeach
+                    </table>
+                </div>
             </div>
-        </div>
         @endforeach
+        </x-filament::section>  
         <x-filament::section>
             <x-slot name="heading">
                 🏆 Ganador de los Juegos (+50 pts)
@@ -250,500 +267,138 @@
             @endif
         </x-filament::section>
 
+        
+        <x-filament::section class="mt-8">
+            <x-slot name="heading">
+                📊 Resumen de la Semana
+            </x-slot>
 
-        @foreach ($teams as $team)
-            <x-filament::section
-                class="mb-8"
-                style="background-color: {{ $team->light_color }}20"
-            >
-                <div class="flex items-center justify-between mb-4">
-                    <h2
-                        class="text-xl font-bold flex items-center gap-2"
-                        style="color: {{ $team->color }}"
+            <div class="grid grid-cols-1 md:grid-cols-{{ count($teams) }} gap-6">
+                @foreach ($teams as $team)
+                    <x-filament::card
+                        style="
+                            border-color: {{ $team->color }}30;
+                            background-color: {{ $team->light_color }}10;
+                        "
+                        class="border"
                     >
-                        {{ $team->name }}
+                        <h4
+                            class="font-bold mb-2"
+                            style="color: {{ $team->color }}"
+                        >
+                            {{ $team->name }}
+                        </h4>
+
+                        <div
+                            class="text-3xl font-bold mb-1"
+                            style="color: {{ $team->color }}"
+                        >
+                            {{ $this->getTeamPoints($team->id) }} pts
+                        </div>
+
+                        <p class="text-sm text-gray-600 dark:text-gray-400">
+                            {{ $team->youths->count() }} jóvenes activos
+                        </p>
 
                         @if ($gameWinnerTeamId === $team->id)
-                            <span
-                                class="inline-flex items-center rounded-full px-3 py-1 text-sm font-medium
-                                    bg-warning-100 text-warning-800
-                                    dark:bg-warning-900 dark:text-warning-200"
-                            >
-                                🏆 GANADOR +50 pts
-                            </span>
+                            <p class="mt-2 text-sm font-medium text-warning-600 dark:text-warning-400">
+                                +50 pts por juegos
+                            </p>
                         @endif
-                    </h2>
-
-                    <div
-                        class="text-lg font-bold"
-                        style="color: {{ $team->color }}"
-                    >
-                        {{ $this->getTeamPoints($team->id) }} pts
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    @foreach ($team->youths as $youth)
-                        @php
-                            $key = 'youth_' . $youth->id;
-                            $individualPoints = $this->getPointsPerYouth($youth->id);
-                        @endphp
-
-                        <x-filament::card>
-                            <div class="flex items-start justify-between mb-3">
-                                <div>
-                                    <h3 class="font-semibold text-gray-900 dark:text-white">
-                                        {{ $youth->name }}
-                                    </h3>
-                                    <p class="text-sm text-gray-500 dark:text-gray-400">
-                                        {{ $youth->age }} años
-                                    </p>
-                                </div>
-
-                                <div class="text-sm font-bold text-gray-700 dark:text-gray-300">
-                                    {{ $individualPoints }} pts
-                                </div>
-                            </div>
-
-                            {{-- TOGGLES --}}
-                            {{-- <div class="space-y-3">
-                                @foreach ([
-                                    ['key' => 'attendance', 'label' => 'Asistencia', 'points' => 10],
-                                    ['key' => 'punctuality', 'label' => 'Puntualidad', 'points' => 10],
-                                    ['key' => 'bible', 'label' => 'Biblia', 'points' => 5],
-                                    ['key' => 'guest', 'label' => 'Invitado', 'points' => 20],
-                                ] as $item)
-                                    <div class="flex items-center justify-between">
-                                        <div>
-                                            <p class="text-sm font-medium text-gray-700 dark:text-gray-300">
-                                                {{ $item['label'] }}
-                                            </p>
-                                            <p class="text-xs text-gray-500 dark:text-gray-400">
-                                                {{ $item['points'] }} pts
-                                            </p>
-                                        </div>
-
-                                        
-                                        <label class="relative inline-flex items-center cursor-pointer">
-                                            <input
-                                                type="checkbox"
-                                                wire:model.live="data.{{ $key }}.{{ $item['key'] }}"
-                                                class="sr-only peer"
-                                            >
-                                            <div
-                                                class="w-11 h-6 rounded-full
-                                                    bg-gray-300 dark:bg-gray-600
-                                                    peer-focus:outline-none
-                                                    peer-checked:bg-opacity-100
-                                                    peer-checked:bg-[{{ $team->light_color }}]
-                                                    after:content-['']
-                                                    after:absolute after:top-[2px] after:left-[2px]
-                                                    after:w-5 after:h-5
-                                                    after:bg-white after:rounded-full
-                                                    after:transition-all
-                                                    peer-checked:after:translate-x-full"
-                                                style="background-color: {{ $team->light_color }};"
-                                            ></div>
-                                        </label>
-                                    </div>
-                                @endforeach
-
-                                
-                                <div class="mt-4">
-                                    <label class="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">
-                                        Observaciones
-                                    </label>
-
-                                    <input
-                                        type="text"
-                                        wire:model.live="data.{{ $key }}.observations"
-                                        placeholder="Observaciones..."
-                                        class="
-                                            w-full rounded-md border
-                                            border-gray-300 dark:border-gray-600
-                                            bg-white dark:bg-gray-800
-                                            px-3 py-2 text-sm
-                                            focus:ring-2 focus:ring-primary-500
-                                            focus:border-primary-500
-                                        "
-                                    />
-                                </div>
-                            </div> --}}
-                            <div class="overflow-x-auto">
-    <table class="min-w-full border border-gray-200 dark:border-gray-700 rounded-lg">
-        <thead class="bg-gray-50 dark:bg-gray-800">
-            <tr>
-                <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700 dark:text-gray-300">
-                    Criterio
-                </th>
-                <th class="px-4 py-2 text-center text-sm font-semibold text-gray-700 dark:text-gray-300">
-                    Puntos
-                </th>
-                <th class="px-4 py-2 text-center text-sm font-semibold text-gray-700 dark:text-gray-300">
-                    Aplicar
-                </th>
-            </tr>
-        </thead>
-
-        <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
-            @foreach ([
-                ['key' => 'attendance', 'label' => 'Asistencia', 'points' => 10],
-                ['key' => 'punctuality', 'label' => 'Puntualidad', 'points' => 10],
-                ['key' => 'bible', 'label' => 'Biblia', 'points' => 5],
-                ['key' => 'guest', 'label' => 'Invitado', 'points' => 20],
-            ] as $item)
-                <tr>
-                    <td class="px-4 py-2">
-                        <div class="text-sm font-medium text-gray-700 dark:text-gray-300">
-                            {{ $item['label'] }}
-                        </div>
-                    </td>
-
-                    <td class="px-4 py-2 text-center">
-                        <span class="text-sm text-gray-500 dark:text-gray-400">
-                            {{ $item['points'] }} pts
-                        </span>
-                    </td>
-
-                    <td class="px-4 py-2 text-center">
-                        {{-- Toggle --}}
-                        <label class="relative inline-flex items-center cursor-pointer">
-                            <input
-                                type="checkbox"
-                                wire:model.live="data.{{ $key }}.{{ $item['key'] }}"
-                                class="sr-only peer"
-                            >
-                            <div
-                                class="w-11 h-6 rounded-full
-                                    bg-gray-300 dark:bg-gray-600
-                                    peer-focus:outline-none
-                                    peer-checked:bg-opacity-100
-                                    after:content-['']
-                                    after:absolute after:top-[2px] after:left-[2px]
-                                    after:w-5 after:h-5
-                                    after:bg-white after:rounded-full
-                                    after:transition-all
-                                    peer-checked:after:translate-x-full"
-                                style="background-color: {{ $team->light_color }};"
-                            ></div>
-                        </label>
-                    </td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
-</div>
-
-{{-- Observaciones --}}
-<div class="mt-4">
-    <label class="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">
-        Observaciones
-    </label>
-
-    <input
-        type="text"
-        wire:model.live="data.{{ $key }}.observations"
-        placeholder="Observaciones..."
-        class="
-            w-full rounded-md border
-            border-gray-300 dark:border-gray-600
-            bg-white dark:bg-gray-800
-            px-3 py-2 text-sm
-            focus:ring-2 focus:ring-primary-500
-            focus:border-primary-500
-        "
-    />
-</div>
-
-                        </x-filament::card>
-                    @endforeach
-                </div>
-            </x-filament::section>
-        @endforeach
-
-
-        <!-- FINAL SUMMARY -->
-        {{-- <div class="mt-8 p-6 bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 rounded-lg">
-            <h3 class="text-lg font-bold mb-4">📊 Resumen de la Semana</h3>
-            
-            <div class="grid grid-cols-1 md:grid-cols-{{ count($teams) }} gap-6">
-                @foreach($teams as $team)
-                <div class="p-4 border rounded-lg" style="border-color: {{ $team->color }}30; background-color: {{ $team->light_color }}10">
-                    <h4 class="font-bold mb-2" style="color: {{ $team->color }}">
-                        {{ $team->name }}
-                    </h4>
-                    <div class="text-3xl font-bold mb-2" style="color: {{ $team->color }}">
-                        {{ $this->getTeamPoints($team->id) }} pts
-                    </div>
-                    <div class="text-sm text-gray-500 dark:text-gray-400">
-                        {{ $team->youths->count() }} jóvenes activos
-                    </div>
-                    @if($gameWinnerTeamId == $team->id)
-                    <div class="mt-2 text-sm font-medium text-yellow-600 dark:text-yellow-400">
-                        +50 pts por juegos
-                    </div>
-                    @endif
-                </div>
+                    </x-filament::card>
                 @endforeach
             </div>
-            
-            <!-- Ganador de la semana -->
+
+            {{-- Ganador de la semana --}}
             @php
                 $teamPoints = [];
-                foreach($teams as $team) {
+
+                foreach ($teams as $team) {
                     $teamPoints[$team->id] = $this->getTeamPoints($team->id);
                 }
+
                 arsort($teamPoints);
-                $winningTeamId = key($teamPoints);
-                $maxPoints = current($teamPoints);
-                $secondPoints = next($teamPoints);
+
+                $winningTeamId = array_key_first($teamPoints);
+                $maxPoints = reset($teamPoints);
+                $secondPoints = count($teamPoints) > 1 ? array_values($teamPoints)[1] : 0;
             @endphp
-            
-            @if(count($teamPoints) > 1 && $maxPoints > 0)
-                <div class="mt-6 p-4 rounded-lg 
-                    @if($maxPoints == $secondPoints) bg-gray-100 dark:bg-gray-800 
-                    @else bg-green-50 dark:bg-green-900/20 @endif">
-                    <div class="flex items-center">
-                        <div class="text-2xl mr-3">
-                            @if($maxPoints == $secondPoints) ⚖️
-                            @else 🏆 @endif
+
+            @if (count($teamPoints) > 1 && $maxPoints > 0)
+                <x-filament::card
+                    class="mt-6
+                        {{ $maxPoints === $secondPoints
+                            ? 'bg-gray-100 dark:bg-gray-800'
+                            : 'bg-success-50 dark:bg-success-900/20'
+                        }}"
+                >
+                    <div class="flex items-start gap-3">
+                        <div class="text-2xl">
+                            {{ $maxPoints === $secondPoints ? '⚖️' : '🏆' }}
                         </div>
+
                         <div>
-                            <div class="font-bold 
-                                @if($maxPoints == $secondPoints) text-gray-700 dark:text-gray-300
-                                @else text-green-700 dark:text-green-300 @endif">
-                                @if($maxPoints == $secondPoints)
+                            <p
+                                class="font-bold
+                                    {{ $maxPoints === $secondPoints
+                                        ? 'text-gray-700 dark:text-gray-300'
+                                        : 'text-success-700 dark:text-success-300'
+                                    }}"
+                            >
+                                @if ($maxPoints === $secondPoints)
                                     ¡Empate! Ambos equipos tienen {{ $maxPoints }} puntos
                                 @else
-                                    @php $winningTeam = $teams->firstWhere('id', $winningTeamId); @endphp
-                                    ¡Equipo <span style="color: {{ $winningTeam->color }}">{{ $winningTeam->name }}</span> lidera!
+                                    @php
+                                        $winningTeam = $teams->firstWhere('id', $winningTeamId);
+                                    @endphp
+                                    ¡Equipo
+                                    <span style="color: {{ $winningTeam->color }}">
+                                        {{ $winningTeam->name }}
+                                    </span>
+                                    lidera!
                                 @endif
-                            </div>
-                            <div class="text-sm text-gray-600 dark:text-gray-400">
+                            </p>
+
+                            <p class="text-sm text-gray-600 dark:text-gray-400">
                                 Diferencia: {{ $maxPoints - $secondPoints }} puntos
-                            </div>
+                            </p>
                         </div>
                     </div>
-                </div>
+                </x-filament::card>
             @endif
-        </div> --}}
-        <x-filament::section class="mt-8">
-    <x-slot name="heading">
-        📊 Resumen de la Semana
-    </x-slot>
-
-    <div class="grid grid-cols-1 md:grid-cols-{{ count($teams) }} gap-6">
-        @foreach ($teams as $team)
-            <x-filament::card
-                style="
-                    border-color: {{ $team->color }}30;
-                    background-color: {{ $team->light_color }}10;
-                "
-                class="border"
-            >
-                <h4
-                    class="font-bold mb-2"
-                    style="color: {{ $team->color }}"
-                >
-                    {{ $team->name }}
-                </h4>
-
-                <div
-                    class="text-3xl font-bold mb-1"
-                    style="color: {{ $team->color }}"
-                >
-                    {{ $this->getTeamPoints($team->id) }} pts
-                </div>
-
-                <p class="text-sm text-gray-600 dark:text-gray-400">
-                    {{ $team->youths->count() }} jóvenes activos
-                </p>
-
-                @if ($gameWinnerTeamId === $team->id)
-                    <p class="mt-2 text-sm font-medium text-warning-600 dark:text-warning-400">
-                        +50 pts por juegos
-                    </p>
-                @endif
-            </x-filament::card>
-        @endforeach
-    </div>
-
-    {{-- Ganador de la semana --}}
-    @php
-        $teamPoints = [];
-
-        foreach ($teams as $team) {
-            $teamPoints[$team->id] = $this->getTeamPoints($team->id);
-        }
-
-        arsort($teamPoints);
-
-        $winningTeamId = array_key_first($teamPoints);
-        $maxPoints = reset($teamPoints);
-        $secondPoints = count($teamPoints) > 1 ? array_values($teamPoints)[1] : 0;
-    @endphp
-
-    @if (count($teamPoints) > 1 && $maxPoints > 0)
-        <x-filament::card
-            class="mt-6
-                {{ $maxPoints === $secondPoints
-                    ? 'bg-gray-100 dark:bg-gray-800'
-                    : 'bg-success-50 dark:bg-success-900/20'
-                }}"
-        >
-            <div class="flex items-start gap-3">
-                <div class="text-2xl">
-                    {{ $maxPoints === $secondPoints ? '⚖️' : '🏆' }}
-                </div>
-
-                <div>
-                    <p
-                        class="font-bold
-                            {{ $maxPoints === $secondPoints
-                                ? 'text-gray-700 dark:text-gray-300'
-                                : 'text-success-700 dark:text-success-300'
-                            }}"
-                    >
-                        @if ($maxPoints === $secondPoints)
-                            ¡Empate! Ambos equipos tienen {{ $maxPoints }} puntos
-                        @else
-                            @php
-                                $winningTeam = $teams->firstWhere('id', $winningTeamId);
-                            @endphp
-                            ¡Equipo
-                            <span style="color: {{ $winningTeam->color }}">
-                                {{ $winningTeam->name }}
-                            </span>
-                            lidera!
-                        @endif
-                    </p>
-
-                    <p class="text-sm text-gray-600 dark:text-gray-400">
-                        Diferencia: {{ $maxPoints - $secondPoints }} puntos
-                    </p>
-                </div>
-            </div>
-        </x-filament::card>
-    @endif
-</x-filament::section>
+        </x-filament::section>
 
 
-        <!-- SAVE BUTTON -->
-        {{-- <div class="flex items-center justify-between mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
-            <div>
-                <a 
-                    href="{{ route('filament.admin.resources.competition-weeks.index') }}"
-                    class="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700"
-                >
-                    Cancelar
-                </a>
-            </div>
-            
-            <div class="flex items-center space-x-4">
-                <div class="text-lg font-bold">
-                    @foreach($teams as $team)
-                    <span class="mr-4" style="color: {{ $team->color }}">
-                        {{ $team->name }}: {{ $this->getTeamPoints($team->id) }}
-                    </span>
-                    @endforeach
-                </div>
-                
-                <button 
-                    type="submit"
-                    class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                >
-                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                    </svg>
-                    Finalizar y Guardar
-                </button>
-            </div>
-        </div> --}}
+       
 
         <div class="mt-8 flex items-center justify-between border-t border-gray-200 pt-6 dark:border-gray-700">
-    <x-filament::button
-        tag="a"
-        href="{{ route('filament.admin.resources.competition-weeks.index') }}"
-        color="gray"
-        outlined
-    >
-        Cancelar
-    </x-filament::button>
+            <x-filament::button
+                tag="a"
+                href="{{ route('filament.admin.resources.competition-weeks.index') }}"
+                color="gray"
+                outlined
+            >
+                Cancelar
+            </x-filament::button>
 
-    <div class="flex items-center gap-4">
-        <div class="text-sm font-bold">
-            @foreach ($teams as $team)
-                <span class="mr-4" style="color: {{ $team->color }}">
-                    {{ $team->name }}: {{ $this->getTeamPoints($team->id) }}
-                </span>
-            @endforeach
+            <div class="flex items-center gap-4">
+                <div class="text-sm font-bold">
+                    @foreach ($teams as $team)
+                        <span class="mr-4" style="color: {{ $team->color }}">
+                            {{ $team->name }}: {{ $this->getTeamPoints($team->id) }}
+                        </span>
+                    @endforeach
+                </div>
+
+                <x-filament::button
+                    type="submit"
+                    color="primary"
+                    size="lg"
+                    icon="heroicon-o-check"
+                >
+                    Finalizar y Guardar
+                </x-filament::button>
+            </div>
         </div>
-
-        <x-filament::button
-            type="submit"
-            color="primary"
-            size="lg"
-            icon="heroicon-o-check"
-        >
-            Finalizar y Guardar
-        </x-filament::button>
-    </div>
-</div>
--------------------------------------
-<hr>
-<div class="fi-card overflow-hidden">
-    <div class="fi-ta-container overflow-x-auto">
-        <table class="fi-ta-table w-full text-sm">
-            <thead class="fi-ta-header">
-                <tr class="fi-ta-header-row">
-                    <th class="fi-ta-header-cell text-left">
-                        Criterio
-                    </th>
-                    <th class="fi-ta-header-cell text-center">
-                        Puntos
-                    </th>
-                    <th class="fi-ta-header-cell text-center">
-                        Estado
-                    </th>
-                </tr>
-            </thead>
-
-            <tbody class="fi-ta-body">
-                @foreach ([
-                    ['label' => 'Asistencia', 'points' => 10, 'active' => true],
-                    ['label' => 'Puntualidad', 'points' => 10, 'active' => true],
-                    ['label' => 'Biblia', 'points' => 5, 'active' => true],
-                    ['label' => 'Invitados', 'points' => 15, 'active' => true],
-                ] as $item)
-                    <tr class="fi-ta-row">
-                        <td class="fi-ta-cell">
-                            {{ $item['label'] }}
-                        </td>
-
-                        <td class="fi-ta-cell text-center font-medium">
-                            {{ $item['points'] }}
-                        </td>
-
-                        <td class="fi-ta-cell text-center">
-                            @if ($item['active'])
-                                <span class="fi-badge fi-color-success">
-                                    Activo
-                                </span>
-                            @else
-                                <span class="fi-badge fi-color-danger">
-                                    Inactivo
-                                </span>
-                            @endif
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
-</div>
-
-
-
-
     </form>
 </x-filament-panels::page>
